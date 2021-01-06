@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+require __DIR__.'/vendor/autoload.php';
+
+use App\Application;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\SingleCommandApplication;
+
+(new SingleCommandApplication())
+    ->setName('Word Generator')
+    ->setVersion('1.0.0')
+    ->addArgument('words', InputArgument::OPTIONAL, 'Number of generated words.')
+    ->addOption('force', 'f', InputOption::VALUE_NONE, 'Disable security.')
+    ->addOption('max-word-length', null, InputOption::VALUE_REQUIRED, 'Max length of word.')
+    ->addOption('min-word-length', null, InputOption::VALUE_REQUIRED, 'Min length of word.')
+    ->addOption('now', null, InputOption::VALUE_REQUIRED, 'Current time, any supported format by php.')
+    ->setCode(function (InputInterface $input, OutputInterface $output): void {
+        (new Application)->execute($input, $output);
+    })
+    ->run();
